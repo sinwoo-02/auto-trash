@@ -8,6 +8,18 @@ from picamera2 import Picamera2
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+def load_env_file():
+    env_path = os.path.join(BASE_DIR, '..', '.env')
+    if os.path.exists(env_path):
+        with open(env_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#') and '=' in line:
+                    key, val = line.split('=', 1)
+                    os.environ.setdefault(key.strip(), val.strip())
+
+load_env_file()
+
 def resolve_model_path(filename):
     candidates = [
         os.path.join(BASE_DIR, '..', 'models', filename),
@@ -19,8 +31,8 @@ def resolve_model_path(filename):
             return os.path.abspath(p)
     return filename
 
-YOLO_PATH = resolve_model_path('best.tflite')
-CLS_PATH = resolve_model_path('contamination_effnet.tflite')  
+YOLO_PATH = resolve_model_path(os.getenv('YOLO_MODEL_PATH', 'best.tflite'))
+CLS_PATH = resolve_model_path(os.getenv('CLS_MODEL_PATH', 'contamination_effnet.tflite'))  
 
 ID_TO_GROUP = {
     0: 'plastic', 1: 'plastic',              
@@ -28,11 +40,11 @@ ID_TO_GROUP = {
     6: 'general', 7: 'general', 8: 'general' 
 }
 
-SERIAL_PORT = '/dev/ttyUSB0' 
-BAUD_RATE = 9600
-CONF_THRESHOLD = 0.5
+SERIAL_PORT = os.getenv('SERIAL_PORT', '/dev/ttyUSB0') 
+BAUD_RATE = int(os.getenv('BAUD_RATE', '9600'))
+CONF_THRESHOLD = float(os.getenv('CONF_THRESHOLD', '0.5'))
 
-FRAME_SKIP = 5
+FRAME_SKIP = int(os.getenv('FRAME_SKIP', '5'))
 
 def main():
     print(">> Connecting to Arduino...")

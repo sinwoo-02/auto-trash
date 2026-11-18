@@ -1,0 +1,32 @@
+# Environment variables
+.env
+*.env
+.env.*
+!.env.example
+
+# Python cache & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+ENV/
+
+# AI Training datasets & logs (large files)
+trash_dataset_yolo/
+plastic_contamination/
+runs/
+*.pt
+*.pth
+*.h5
+*.ckpt
+
+# Model binaries (현재 12MB, 16MB로 GitHub 100MB 제한 이내이나 제외하고 싶다면 주석 해제)
+# ai/models/*.tflite
+
+# OS & IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
