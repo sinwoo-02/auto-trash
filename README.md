@@ -75,10 +75,10 @@ graph TD
     subgraph MCU["Arduino Uno R3 (Actuator & Sensor Control)"]
         SerialIn["Serial.readStringUntil('\\n')"] --> ProtocolParser["패킷 파싱 ('G','P','C', 오염 여부)"]
         
-        ProtocolParser -->|'G'| GateG["일반 쓰레기 게이트 (Servo D3, D5)"]
-        ProtocolParser -->|'P,Y'| GateP["플라스틱 게이트 (Servo D6, D9)"]
-        ProtocolParser -->|'C'| DoorCan["슬라이딩 도어 직접 투입"]
-        ProtocolParser -->|'P,N'| Reject["오염 플라스틱 분리/경고"]
+        ProtocolParser -->|"'G'"| GateG["일반 쓰레기 게이트 (Servo D3, D5)"]
+        ProtocolParser -->|"'P,Y'"| GateP["플라스틱 게이트 (Servo D6, D9)"]
+        ProtocolParser -->|"'C'"| DoorCan["슬라이딩 도어 직접 투입"]
+        ProtocolParser -->|"'P,N'"| Reject["오염 플라스틱 분리/경고"]
         
         GateG --> SlideDoor["슬라이딩 도어 구동 (Servo D11)"]
         GateP --> SlideDoor
@@ -88,7 +88,7 @@ graph TD
         DistCheck --> LED["만적 경고 RED LED (D12)"]
     end
 
-    SerialOut ===|USB-Serial Data Cable (9600 bps)| SerialIn
+    SerialOut ===|"USB-Serial Data Cable (9600 bps)"| SerialIn
 ```
 
 ### 2. 2-Stage 딥러닝 인식 파이프라인
